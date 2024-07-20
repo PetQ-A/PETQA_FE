@@ -82,7 +82,7 @@ struct LoginSelectPetView: View {
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .background(selectedPet != nil ? Color.red : Color.gray)
+                            .background(selectedPet != nil ? Color("login_true_btn_color") : Color("login_false_btn_color"))
                             .cornerRadius(10)
                             .padding(.bottom, 20)
                     }

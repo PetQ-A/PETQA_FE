@@ -17,6 +17,8 @@
 		902CF9C22C3E448B005632EE /* LoginEnterInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902CF9C12C3E448B005632EE /* LoginEnterInfoView.swift */; };
 		902CF9C62C3E566C005632EE /* Ownglyph meetme.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 902CF9C32C3E566C005632EE /* Ownglyph meetme.ttf */; };
 		902CF9CD2C4110BC005632EE /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902CF9CC2C4110BC005632EE /* ImagePicker.swift */; };
+		9042F7E12C4C13E900F94437 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9042F7E02C4C13E900F94437 /* TabBarView.swift */; };
+		9042F7E42C4C146400F94437 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9042F7E32C4C146400F94437 /* HomeView.swift */; };
 		D83554F26C1505A2AA55480A /* Pods_PetQnA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D380B6BC9655DE6228021387 /* Pods_PetQnA.framework */; };
 		DA0376D12C41609F00B71ACC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0376D02C41609F00B71ACC /* AppDelegate.swift */; };
 		DA0376D72C44067F00B71ACC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0376D62C44067F00B71ACC /* SceneDelegate.swift */; };
@@ -38,6 +40,8 @@
 		902CF9C32C3E566C005632EE /* Ownglyph meetme.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ownglyph meetme.ttf"; sourceTree = "<group>"; };
 		902CF9C92C3E56FB005632EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		902CF9CC2C4110BC005632EE /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		9042F7E02C4C13E900F94437 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
+		9042F7E32C4C146400F94437 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		B09AD25227E9FC60850A0BD8 /* Pods-PetQnA.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PetQnA.debug.xcconfig"; path = "Target Support Files/Pods-PetQnA/Pods-PetQnA.debug.xcconfig"; sourceTree = "<group>"; };
 		D380B6BC9655DE6228021387 /* Pods_PetQnA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PetQnA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA0376D02C41609F00B71ACC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -94,8 +98,7 @@
 				DA0376D62C44067F00B71ACC /* SceneDelegate.swift */,
 				DA0376D82C44087100B71ACC /* KakaoAuthVM.swift */,
 				2A078AE22C4443B5001E355C /* Applelogin.swift */,
-				902CF9C02C3E3C38005632EE /* Login */,
-				902CF9BB2C3DA6AC005632EE /* SplashView.swift */,
+				9042F7DF2C4C13CF00F94437 /* View */,
 				902CF9CC2C4110BC005632EE /* ImagePicker.swift */,
 				902CF9BD2C3E36E6005632EE /* Font */,
 				902CF9B12C3DA432005632EE /* Assets.xcassets */,
@@ -128,6 +131,25 @@
 				902CF9BE2C3E3C33005632EE /* LoginSelectPetView.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		9042F7DF2C4C13CF00F94437 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9042F7E22C4C144B00F94437 /* Main */,
+				902CF9C02C3E3C38005632EE /* Login */,
+				9042F7E02C4C13E900F94437 /* TabBarView.swift */,
+				902CF9BB2C3DA6AC005632EE /* SplashView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		9042F7E22C4C144B00F94437 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				9042F7E32C4C146400F94437 /* HomeView.swift */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 		C1D84DCBA30145F87A3DEF55 /* Frameworks */ = {
@@ -254,6 +276,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2A078AE32C4443B5001E355C /* Applelogin.swift in Sources */,
+				9042F7E12C4C13E900F94437 /* TabBarView.swift in Sources */,
 				902CF9BF2C3E3C33005632EE /* LoginSelectPetView.swift in Sources */,
 				DA0376D92C44087100B71ACC /* KakaoAuthVM.swift in Sources */,
 				902CF9C22C3E448B005632EE /* LoginEnterInfoView.swift in Sources */,
@@ -261,6 +284,7 @@
 				902CF9CD2C4110BC005632EE /* ImagePicker.swift in Sources */,
 				DA0376D12C41609F00B71ACC /* AppDelegate.swift in Sources */,
 				902CF9AE2C3DA430005632EE /* PetQnAApp.swift in Sources */,
+				9042F7E42C4C146400F94437 /* HomeView.swift in Sources */,
 				902CF9BC2C3DA6AC005632EE /* SplashView.swift in Sources */,
 				DA0376D72C44067F00B71ACC /* SceneDelegate.swift in Sources */,
 			);
