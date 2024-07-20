@@ -1,6 +1,6 @@
 //
 //  SceneDelegate.swift
-//  
+//  PetQnA
 //
 //  Created by 조수민 on 7/14/24.
 //
