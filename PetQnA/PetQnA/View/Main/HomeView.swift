@@ -9,6 +9,8 @@ import SwiftUI
 
 struct HomeView: View {
     
+    @State var showingBottomSheet = false
+    
     // 임시 문답 리스트 배열
     let messages = [
         "저를 처음 만났을 때 이야기를 들려주세요!",
@@ -56,9 +58,6 @@ struct HomeView: View {
                 .padding(.leading, 16)
                 
                 
-                
-                
-                
                 Spacer()
                 
                 Button(action: {
@@ -98,6 +97,7 @@ struct HomeView: View {
             VStack {
                 Button(action: {
                     // 오늘 문답하러 가기
+                    showingBottomSheet = true
                 }) {
                     Image("main_bubble")
                         .resizable()
@@ -113,6 +113,11 @@ struct HomeView: View {
                         )
                 }
                 .padding(.bottom, 45)
+                .sheet(isPresented: $showingBottomSheet) {
+                    AnswerBottomSheet(showingBottomSheet: $showingBottomSheet)
+                        .presentationDetents([.height(650)])
+                        .presentationDragIndicator(.hidden)
+                }
                 HStack {
                     Image("main_fullfeedbowl")
                         .resizable()
