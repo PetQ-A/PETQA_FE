@@ -7,6 +7,7 @@ target 'PetQnA' do
 
   # Pods for PetQnA
   pod 'Alamofire'
+  pod 'KakaoSDK'
   pod 'KakaoSDKCommon'
   pod 'KakaoSDKAuth'
   pod 'KakaoSDKUser'

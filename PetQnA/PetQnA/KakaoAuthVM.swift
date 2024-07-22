@@ -11,6 +11,8 @@ import KakaoSDKAuth
 import KakaoSDKCommon
 import KakaoSDKUser
 
+// ?
+
 class KakaoAuthVM : ObservableObject {
     
     @Published var user: User? = nil

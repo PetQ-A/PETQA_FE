@@ -23,6 +23,8 @@
 		DA0376D12C41609F00B71ACC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0376D02C41609F00B71ACC /* AppDelegate.swift */; };
 		DA0376D72C44067F00B71ACC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0376D62C44067F00B71ACC /* SceneDelegate.swift */; };
 		DA0376D92C44087100B71ACC /* KakaoAuthVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0376D82C44087100B71ACC /* KakaoAuthVM.swift */; };
+		DA03776E2C4D1B0600B71ACC /* DashedLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA03776D2C4D1B0600B71ACC /* DashedLine.swift */; };
+		DA0377722C4D1E2400B71ACC /* AnswerBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0377712C4D1E2400B71ACC /* AnswerBottomSheet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +49,8 @@
 		DA0376D02C41609F00B71ACC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA0376D62C44067F00B71ACC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		DA0376D82C44087100B71ACC /* KakaoAuthVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoAuthVM.swift; sourceTree = "<group>"; };
+		DA03776D2C4D1B0600B71ACC /* DashedLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashedLine.swift; sourceTree = "<group>"; };
+		DA0377712C4D1E2400B71ACC /* AnswerBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerBottomSheet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +152,8 @@
 			isa = PBXGroup;
 			children = (
 				9042F7E32C4C146400F94437 /* HomeView.swift */,
+				DA03776D2C4D1B0600B71ACC /* DashedLine.swift */,
+				DA0377712C4D1E2400B71ACC /* AnswerBottomSheet.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -172,6 +178,7 @@
 				902CF9A72C3DA430005632EE /* Frameworks */,
 				902CF9A82C3DA430005632EE /* Resources */,
 				4ADCB95677716D368F4E1F30 /* [CP] Embed Pods Frameworks */,
+				E41A8EE1BB0081F251873D87 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -268,6 +275,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		E41A8EE1BB0081F251873D87 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PetQnA/Pods-PetQnA-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PetQnA/Pods-PetQnA-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PetQnA/Pods-PetQnA-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -279,8 +303,10 @@
 				9042F7E12C4C13E900F94437 /* TabBarView.swift in Sources */,
 				902CF9BF2C3E3C33005632EE /* LoginSelectPetView.swift in Sources */,
 				DA0376D92C44087100B71ACC /* KakaoAuthVM.swift in Sources */,
+				DA0377722C4D1E2400B71ACC /* AnswerBottomSheet.swift in Sources */,
 				902CF9C22C3E448B005632EE /* LoginEnterInfoView.swift in Sources */,
 				902CF9B02C3DA430005632EE /* LoginView.swift in Sources */,
+				DA03776E2C4D1B0600B71ACC /* DashedLine.swift in Sources */,
 				902CF9CD2C4110BC005632EE /* ImagePicker.swift in Sources */,
 				DA0376D12C41609F00B71ACC /* AppDelegate.swift in Sources */,
 				902CF9AE2C3DA430005632EE /* PetQnAApp.swift in Sources */,

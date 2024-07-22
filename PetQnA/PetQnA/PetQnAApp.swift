@@ -16,7 +16,7 @@ struct PetQnAApp: App {
     
     var body: some Scene {
         WindowGroup {
-            SplashView()
+            HomeView()
         }
     }
 }
