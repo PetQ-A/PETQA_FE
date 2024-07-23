@@ -30,16 +30,22 @@ struct HomeView: View {
                         
                     }) {
                         ZStack {
-                            // 전체 원의 배경 서클 (투명한 내부, login_true_btn_color 테두리)
+                            // 전체 원의 배경 서클
                             Circle()
                                 .trim(from: 0.0, to: 0.5)
-                                .stroke(Color("login_true_btn_color").opacity(0.2), style: StrokeStyle(lineWidth: 4, lineCap: .round))
+                                .stroke(Color("login_true_btn_color"), style: StrokeStyle(lineWidth: 5, lineCap: .round))
+                                .rotationEffect(Angle(degrees: 180))
+                            
+                            // 채워지지 않은 서클
+                            Circle()
+                                .trim(from: 0.0, to: 0.5)
+                                .stroke(Color("login_bg_color"), style: StrokeStyle(lineWidth: 4, lineCap: .round))
                                 .rotationEffect(Angle(degrees: 180))
                             
                             // 진행된 부분: login_true_btn_color로 채움
                             Circle()
                                 .trim(from: 0.0, to: progress / 2)
-                                .stroke(Color("login_true_btn_color"), style: StrokeStyle(lineWidth: 4, lineCap: .round))
+                                .stroke(Color("login_true_btn_color"), style: StrokeStyle(lineWidth: 5, lineCap: .round))
                                 .rotationEffect(Angle(degrees: 180))
                             
                             // Progress Text
