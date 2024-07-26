@@ -9,6 +9,8 @@ import SwiftUI
 
 struct TabBarView: View {
     @State private var selectedTab = 0
+    @EnvironmentObject var appState: AppState
+
     
     // TabBar 커스텀 = 배경색 설정 및 독립
     init() {
@@ -23,6 +25,7 @@ struct TabBarView: View {
         TabView(selection: $selectedTab) {
             NavigationStack {
                 HomeView()
+                    .environmentObject(appState)
             }
             .tabItem {
                 if selectedTab == 0 {
@@ -73,12 +76,14 @@ struct TabBarView: View {
             }
             .tag(3)
         }
+        .navigationBarBackButtonHidden(true) // 뒤로 가기 버튼 숨기기 + 차후 수정할 가능성 O
     }
 }
 
 struct TabBarView_Previews: PreviewProvider {
     static var previews: some View {
         TabBarView()
+            .environmentObject(AppState())
     }
 }
 
