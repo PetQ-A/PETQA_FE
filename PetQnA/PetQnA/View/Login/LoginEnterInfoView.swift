@@ -9,6 +9,8 @@ import SwiftUI
 import PhotosUI
 
 struct LoginEnterInfoView: View {
+    
+    @EnvironmentObject var appState: AppState
     @State private var userName: String = ""
     @State private var petName: String = ""
     @State private var petBirthdate: String = ""
@@ -58,225 +60,241 @@ struct LoginEnterInfoView: View {
                 
                 Spacer().frame(height: 40)
                 
-                ScrollView {
-                    VStack {
-                        ZStack {
-                            Circle()
-                                .fill(Color.clear)
-                                .frame(width: 100, height: 100)
-                                .overlay(Circle().stroke(Color.gray.opacity(0.4), lineWidth: 1))
-                            
-                            if useCustomProfileImage, let customProfileImage = customProfileImage {
-                                customProfileImage
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
+                VStack {
+                    ScrollView {
+                        VStack {
+                            ZStack {
+                                Circle()
+                                    .fill(Color.clear)
                                     .frame(width: 100, height: 100)
-                                    .clipShape(Circle())
-                            } else {
-                                Image(profileImage)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 80, height: 80)
-                            }
-                        }
-                        
-                        Button(action: {
-                            self.showActionSheet.toggle()
-                        }) {
-                            Text("프로필 사진 변경")
-                                .font(.system(size: 8, weight: .semibold))
-                                .foregroundColor(Color("login_btn_color"))
-                                .padding(.vertical, 8)
-                                .padding(.horizontal, 16)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(Color("login_btn_color"), lineWidth: 2)
-                                        .background(Color.white)
-                                        .cornerRadius(10)
-                                )
-                        }
-                        .actionSheet(isPresented: $showActionSheet) {
-                            ActionSheet(
-                                title: Text("프로필 사진 설정"),
-                                buttons: [
-                                    .default(Text("앨범에서 사진 선택")) {
-                                        self.showImagePicker.toggle()
-                                    },
-                                    .default(Text("기본 프로필 이미지 적용")) {
-                                        self.useCustomProfileImage = false
-                                    },
-                                    .cancel(Text("취소"))
-                                ]
-                            )
-                        }
-                        .sheet(isPresented: $showImagePicker, onDismiss: loadImage) {
-                            ImagePicker(image: self.$inputImage)
-                        }
-                        
-                        Spacer().frame(height: 20)
-                        
-                        VStack(alignment: .leading, spacing: 30) {
-                            VStack(alignment: .leading) {
-                                HStack {
-                                    ZStack {
-                                        Text("사용자 닉네임")
-                                            .font(.system(size: 12, weight: .bold))
-                                            .foregroundColor(.black)
-                                        
-                                        Circle()
-                                            .fill(Color.red)
-                                            .frame(width: 5, height: 5)
-                                            .offset(x: -37, y: -10)
-                                    }
-                                    Spacer()
+                                    .overlay(Circle().stroke(Color.gray.opacity(0.4), lineWidth: 1))
+                                
+                                if useCustomProfileImage, let customProfileImage = customProfileImage {
+                                    customProfileImage
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: 100, height: 100)
+                                        .clipShape(Circle())
+                                } else {
+                                    Image(profileImage)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 80, height: 80)
                                 }
-                                HStack {
-                                    UnderlinedTextField(placeholder: "사용자 닉네임", text: $userName)
-                                        .onChange(of: userName) { newValue in
-                                            isUserNameValid = false
-                                        }
-                                    Button(action: {
-                                        // 임시 로직으로 중복 여부 확인
-                                        if userName.isEmpty || userName == "중복" {
-                                            showToast = true
-                                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                                                withAnimation {
-                                                    showToast = false
-                                                }
-                                            }
-                                        } else {
-                                            isUserNameValid = true
-                                        }
-                                    }) {
-                                        Text(isUserNameValid ? "사용 가능" : "중복 확인")
-                                            .font(.system(size: 10, weight: .semibold))
-                                            .foregroundColor(isUserNameValid ? Color("login_btn_color") : .white)
-                                            .padding(.vertical, 8)
-                                            .padding(.horizontal, 16)
-                                            .background(
-                                                RoundedRectangle(cornerRadius: 10)
-                                                    .stroke(isUserNameValid ? Color("login_btn_color") : Color.clear, lineWidth: isUserNameValid ? 2 : 0)
-                                                    .background(isUserNameValid ? Color.white : Color("login_btn_color"))
-                                                    .cornerRadius(10)
-                                            )
-                                    }
-
-                                }
-
-
                             }
                             
-                            VStack(alignment: .leading) {
-                                ZStack {
-                                    Text("반려동물 이름")
-                                        .font(.system(size: 12, weight: .bold))
-                                        .foregroundColor(.black)
-                                    Circle()
-                                        .fill(Color.red)
-                                        .frame(width: 5, height: 5)
-                                        .offset(x: -37, y: -10)
-                                }
-                                UnderlinedTextField(placeholder: "최대 n글자", text: $petName)
+                            Button(action: {
+                                self.showActionSheet.toggle()
+                            }) {
+                                Text("프로필 사진 변경")
+                                    .font(.system(size: 8, weight: .semibold))
+                                    .foregroundColor(Color("login_btn_color"))
+                                    .padding(.vertical, 8)
+                                    .padding(.horizontal, 16)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .stroke(Color("login_btn_color"), lineWidth: 2)
+                                            .background(Color.white)
+                                            .cornerRadius(10)
+                                    )
                             }
-                            VStack(alignment: .leading) {
-                                HStack {
-                                    ZStack {
-                                        Text("반려동물 생일")
-                                            .font(.system(size: 12, weight: .bold))
-                                            .foregroundColor(.black)
-                                        Circle()
-                                            .fill(Color.red)
-                                            .frame(width: 5, height: 5)
-                                            .offset(x: -37, y: -10)
-                                    }
-                                    Text("생년월일을 8자로 표기해주세요")
-                                        .font(.system(size: 8, weight: .semibold))
-                                        .foregroundColor(.gray)
-                                }
-                                UnderlinedTextField(placeholder: "20240101", text: $petBirthdate)
-                                    .keyboardType(.numberPad)
+                            .actionSheet(isPresented: $showActionSheet) {
+                                ActionSheet(
+                                    title: Text("프로필 사진 설정"),
+                                    buttons: [
+                                        .default(Text("앨범에서 사진 선택")) {
+                                            self.showImagePicker.toggle()
+                                        },
+                                        .default(Text("기본 프로필 이미지 적용")) {
+                                            self.useCustomProfileImage = false
+                                        },
+                                        .cancel(Text("취소"))
+                                    ]
+                                )
                             }
-                            VStack(alignment: .leading) {
-                                HStack {
-                                    ZStack {
-                                        Text("반려동물 성별")
-                                            .font(.system(size: 12, weight: .bold))
-                                            .foregroundColor(.black)
-                                        Circle()
-                                            .fill(Color.red)
-                                            .frame(width: 5, height: 5)
-                                            .offset(x: -37, y: -10)
+                            .sheet(isPresented: $showImagePicker, onDismiss: loadImage) {
+                                ImagePicker(image: self.$inputImage)
+                            }
+                            
+                            Spacer().frame(height: 20)
+                            
+                            VStack(alignment: .leading, spacing: 30) {
+                                VStack(alignment: .leading) {
+                                    HStack {
+                                        ZStack {
+                                            Text("사용자 닉네임")
+                                                .font(.system(size: 12, weight: .bold))
+                                                .foregroundColor(.black)
+                                            
+                                            Circle()
+                                                .fill(Color.red)
+                                                .frame(width: 5, height: 5)
+                                                .offset(x: -37, y: -10)
+                                        }
+                                        Spacer()
                                     }
-                                    Text("중성화를 받았더라도, 기존 성별을 체크해 주세요")
-                                        .font(.system(size: 8, weight: .semibold))
-                                        .foregroundColor(.gray)
-                                }
-                                HStack {
-                                    ForEach(Gender.allCases, id: \.self) { gender in
+                                    HStack {
+                                        UnderlinedTextField(placeholder: "사용자 닉네임", text: $userName)
+                                            .onChange(of: userName) { newValue in
+                                                isUserNameValid = false
+                                            }
                                         Button(action: {
-                                            self.petGender = gender
+                                            // 임시 로직으로 중복 여부 확인
+                                            if userName.isEmpty || userName == "중복" {
+                                                showToast = true
+                                                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                                    withAnimation {
+                                                        showToast = false
+                                                    }
+                                                }
+                                            } else {
+                                                isUserNameValid = true
+                                            }
                                         }) {
-                                            Text(gender.rawValue)
-                                                .font(.system(size: 10, weight: .bold))
-                                                .foregroundColor(self.petGender == gender ? .white : .gray.opacity(0.5))
-                                                .frame(width: 31, height: 25)
-                                                .background(self.petGender == gender ? Color("login_enterinfo_txt_color") : Color.white)
-                                                .overlay(
-                                                    RoundedRectangle(cornerRadius: 20)
-                                                        .stroke(Color("login_false_btn_color"), lineWidth: self.petGender == gender ? 0 : 1)
+                                            Text(isUserNameValid ? "사용 가능" : "중복 확인")
+                                                .font(.system(size: 10, weight: .semibold))
+                                                .foregroundColor(isUserNameValid ? Color("login_btn_color") : .white)
+                                                .padding(.vertical, 8)
+                                                .padding(.horizontal, 16)
+                                                .background(
+                                                    RoundedRectangle(cornerRadius: 10)
+                                                        .stroke(isUserNameValid ? Color("login_btn_color") : Color.clear, lineWidth: isUserNameValid ? 2 : 0)
+                                                        .background(isUserNameValid ? Color.white : Color("login_btn_color"))
+                                                        .cornerRadius(10)
                                                 )
-                                                .cornerRadius(20)
+                                        }
+                                        
+                                    }
+                                    
+                                    
+                                }
+                                
+                                VStack(alignment: .leading) {
+                                    ZStack {
+                                        Text("반려동물 이름")
+                                            .font(.system(size: 12, weight: .bold))
+                                            .foregroundColor(.black)
+                                        Circle()
+                                            .fill(Color.red)
+                                            .frame(width: 5, height: 5)
+                                            .offset(x: -37, y: -10)
+                                    }
+                                    UnderlinedTextField(placeholder: "최대 n글자", text: $petName)
+                                }
+                                VStack(alignment: .leading) {
+                                    HStack {
+                                        ZStack {
+                                            Text("반려동물 생일")
+                                                .font(.system(size: 12, weight: .bold))
+                                                .foregroundColor(.black)
+                                            Circle()
+                                                .fill(Color.red)
+                                                .frame(width: 5, height: 5)
+                                                .offset(x: -37, y: -10)
+                                        }
+                                        Text("생년월일을 8자로 표기해주세요")
+                                            .font(.system(size: 8, weight: .semibold))
+                                            .foregroundColor(.gray)
+                                    }
+                                    UnderlinedTextField(placeholder: "20240101", text: $petBirthdate)
+                                        .keyboardType(.numberPad)
+                                }
+                                VStack(alignment: .leading) {
+                                    HStack {
+                                        ZStack {
+                                            Text("반려동물 성별")
+                                                .font(.system(size: 12, weight: .bold))
+                                                .foregroundColor(.black)
+                                            Circle()
+                                                .fill(Color.red)
+                                                .frame(width: 5, height: 5)
+                                                .offset(x: -37, y: -10)
+                                        }
+                                        Text("중성화를 받았더라도, 기존 성별을 체크해 주세요")
+                                            .font(.system(size: 8, weight: .semibold))
+                                            .foregroundColor(.gray)
+                                    }
+                                    HStack {
+                                        ForEach(Gender.allCases, id: \.self) { gender in
+                                            Button(action: {
+                                                self.petGender = gender
+                                            }) {
+                                                Text(gender.rawValue)
+                                                    .font(.system(size: 10, weight: .bold))
+                                                    .foregroundColor(self.petGender == gender ? .white : .gray.opacity(0.5))
+                                                    .frame(width: 31, height: 25)
+                                                    .background(self.petGender == gender ? Color("login_enterinfo_txt_color") : Color.white)
+                                                    .overlay(
+                                                        RoundedRectangle(cornerRadius: 20)
+                                                            .stroke(Color("login_false_btn_color"), lineWidth: self.petGender == gender ? 0 : 1)
+                                                    )
+                                                    .cornerRadius(20)
+                                            }
                                         }
                                     }
                                 }
-                            }
-                            VStack(alignment: .leading) {
-                                HStack {
-                                    ZStack {
-                                        Text("반려동물 몸무게")
-                                            .font(.system(size: 12, weight: .bold))
-                                            .foregroundColor(.black)
-                                        Circle()
-                                            .fill(Color.red)
-                                            .frame(width: 5, height: 5)
-                                            .offset(x: -42, y: -10)
+                                VStack(alignment: .leading) {
+                                    HStack {
+                                        ZStack {
+                                            Text("반려동물 몸무게")
+                                                .font(.system(size: 12, weight: .bold))
+                                                .foregroundColor(.black)
+                                            Circle()
+                                                .fill(Color.red)
+                                                .frame(width: 5, height: 5)
+                                                .offset(x: -42, y: -10)
+                                        }
                                     }
-                                }
-                                ZStack(alignment: .trailing) {
-                                    UnderlinedTextField(placeholder: "5.5", text: $petWeight)
-                                        .keyboardType(.decimalPad)
-                                    
-                                    Text("Kg")
-                                        .font(.system(size: 14))
-                                        .foregroundColor(Color.gray)
-                                        .padding(.trailing, 1)
+                                    ZStack(alignment: .trailing) {
+                                        UnderlinedTextField(placeholder: "5.5", text: $petWeight)
+                                            .keyboardType(.decimalPad)
+                                        
+                                        Text("Kg")
+                                            .font(.system(size: 14))
+                                            .foregroundColor(Color.gray)
+                                            .padding(.trailing, 1)
+                                    }
                                 }
                             }
                         }
+                        .padding()
+                        .padding(.vertical)
+                        .background(Color.white)
+                        .cornerRadius(15)
+                        .shadow(radius: 0.3)
                     }
-                    .padding()
-                    .padding(.vertical)
-                    .background(Color.white)
-                    .cornerRadius(15)
-                    .shadow(radius: 0.3)
                 }
+                .cornerRadius(15)
+                .shadow(radius: 0.3)
                 
                 
-                Spacer()
-                
-                Button(action: {
-                    // 시작하기 버튼 액션
-                }) {
+                Spacer().frame(height: 47)
+
+                if !(userName.isEmpty || isUserNameValid == false || petName.isEmpty || petBirthdate.isEmpty || petGender == nil || petWeight.isEmpty) {
+                    NavigationLink(destination: TabBarView().environmentObject(appState).navigationBarBackButtonHidden(true)) {
+                        Text("시작하기")
+                            .font(.custom("Ownglyph meetme", size: 18))
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color("login_true_btn_color"))
+                            .cornerRadius(10)
+                    }
+                    .simultaneousGesture(TapGesture().onEnded {
+                        appState.petName = petName
+                    })
+                    .padding(.bottom, 10)
+                } else {
                     Text("시작하기")
                         .font(.custom("Ownglyph meetme", size: 18))
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background((userName.isEmpty || petName.isEmpty || petBirthdate.isEmpty || petGender == nil || petWeight.isEmpty) ? Color("login_false_btn_color") : Color("login_true_btn_color"))
+                        .background(Color("login_false_btn_color"))
                         .cornerRadius(10)
+                        .padding(.bottom, 10)
+                        .disabled(true)
                 }
-                .disabled(userName.isEmpty || petName.isEmpty || petBirthdate.isEmpty || petGender == nil || petWeight.isEmpty)
-                .padding(.bottom, 20)
             }
             .padding()
             
@@ -331,8 +349,11 @@ struct UnderlinedTextField: View {
     }
 }
 
-#Preview {
-    LoginEnterInfoView(profileImage: "profile_placeholder")
+struct LoginEnterInfoView_Previews: PreviewProvider {
+    static var previews: some View {
+        LoginEnterInfoView(profileImage: "profile_placeholder")
+            .environmentObject(AppState())
+    }
 }
 
 // 오리지널 UnderlinedTextField
