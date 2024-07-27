@@ -15,22 +15,6 @@ struct SnackSelectionView: View {
     var body: some View {
         NavigationView {
             VStack {
-                ZStack {
-                    HStack {
-                        Button(action: {
-                            // 뒤로 가기 액션
-                        }) {
-                            Image(systemName: "chevron.left")
-                                .foregroundColor(.black)
-                                .padding()
-                        }
-                        Spacer()
-                    }
-                    Text("간식 고르기")
-                        .font(.headline)
-                        .frame(maxWidth: .infinity, alignment: .center)
-                }
-                
                 ScrollView {
                     VStack {
                         Spacer()
@@ -86,18 +70,21 @@ struct SnackSelectionView: View {
                                 })
                                 .presentationDetents([.height(200)])
                             }
-                            NavigationLink("", destination: SnackDetailView(selectedSnack: selectedSnack), isActive: $navigateToDetailView)
+                            NavigationLink("", destination: SnackDetailView(selectedSnack: selectedSnack).navigationBarBackButtonHidden(true), isActive: $navigateToDetailView)
                             
                         }
                     }
                     .background(Color("login_bg_color"))
-                    .navigationDestination(for: SnackItem?.self) { snack in
-                        if let selectedSnack = snack {
-                            SnackDetailView(selectedSnack: selectedSnack)
-                        }
-                    }
                 }
             }
+            .navigationBarTitle("간식 고르기", displayMode: .inline)
+            .navigationBarItems(leading: Button(action: {
+                // 뒤로가기 액션
+                navigateToDetailView = false
+            }) {
+                Image(systemName: "chevron.left")
+                    .foregroundColor(.black) // 아이콘 색상 설정
+            })
         }
     }
 }
