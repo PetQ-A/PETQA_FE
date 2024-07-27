@@ -11,6 +11,8 @@ struct HomeView: View {
     
     @State var showingBottomSheet = false
     @State private var navigateToSnackSelection = false
+    //@EnvironmentObject var appState: AppState
+
     
     // 임시 문답 리스트 배열
     let messages = [
@@ -30,16 +32,22 @@ struct HomeView: View {
                         
                     }) {
                         ZStack {
-                            // 전체 원의 배경 서클 (투명한 내부, login_true_btn_color 테두리)
+                            // 전체 원의 배경 서클
                             Circle()
                                 .trim(from: 0.0, to: 0.5)
-                                .stroke(Color("login_true_btn_color").opacity(0.2), style: StrokeStyle(lineWidth: 4, lineCap: .round))
+                                .stroke(Color("login_true_btn_color"), style: StrokeStyle(lineWidth: 5, lineCap: .round))
+                                .rotationEffect(Angle(degrees: 180))
+                            
+                            // 채워지지 않은 서클
+                            Circle()
+                                .trim(from: 0.0, to: 0.5)
+                                .stroke(Color("login_bg_color"), style: StrokeStyle(lineWidth: 4, lineCap: .round))
                                 .rotationEffect(Angle(degrees: 180))
                             
                             // 진행된 부분: login_true_btn_color로 채움
                             Circle()
                                 .trim(from: 0.0, to: progress / 2)
-                                .stroke(Color("login_true_btn_color"), style: StrokeStyle(lineWidth: 4, lineCap: .round))
+                                .stroke(Color("login_true_btn_color"), style: StrokeStyle(lineWidth: 5, lineCap: .round))
                                 .rotationEffect(Angle(degrees: 180))
                             
                             // Progress Text
@@ -56,7 +64,6 @@ struct HomeView: View {
                     }
                 }
                 .padding(.leading, 16)
-                
                 
                 Spacer()
                 
@@ -101,7 +108,6 @@ struct HomeView: View {
             VStack {
                 Button(action: {
                     // 오늘 문답하러 가기
-                    showingBottomSheet = true
                 }) {
                     Image("main_bubble")
                         .resizable()
@@ -117,22 +123,24 @@ struct HomeView: View {
                         )
                 }
                 .padding(.bottom, 45)
-                .sheet(isPresented: $showingBottomSheet) {
-                    AnswerBottomSheet(showingBottomSheet: $showingBottomSheet)
-                        .presentationDetents([.height(650)])
-                        .presentationDragIndicator(.hidden)
-                }
                 HStack {
                     Image("main_fullfeedbowl")
                         .resizable()
                         .frame(width: 102, height: 76)
                         .padding(.top, 150)
                     
-                    Image("main_cat")
-                        .resizable()
-                        .frame(width: 220, height: 227)
+                    if appState.selectedPet == .cat {
+                        Image("main_cat")
+                            .resizable()
+                            .frame(width: 220, height: 227)
+                    } else if appState.selectedPet == .dog {
+                        Image("main_dog")
+                            .resizable()
+                            .frame(width: 220, height: 227)
+                    }
                 }
-                Text("별이")
+                // LoginEnterInfoView에서 입력한 petName
+                Text(appState.petName)
                     .font(.custom("Ownglyph meetme", size: 24))
                     .padding(.top, 20)
                     .padding(.leading, 100)
@@ -144,6 +152,9 @@ struct HomeView: View {
     }
 }
 
-#Preview {
-    HomeView()
+struct HomeView_Previews: PreviewProvider {
+    static var previews: some View {
+        HomeView()
+            .environmentObject(AppState())
+    }
 }

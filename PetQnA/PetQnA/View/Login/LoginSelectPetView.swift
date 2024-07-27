@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct LoginSelectPetView: View {
+    @StateObject private var appState = AppState()
     @State private var selectedPet: PetType? = nil
+    @State private var showLoginEnterInfoView = false
     
     // 다음 LoginEnterInfoView에 사용자가 선택한 아이로 기본 프사 넘길 것들
     enum PetType {
@@ -74,9 +76,13 @@ struct LoginSelectPetView: View {
                     
                     Spacer().frame(height: 40)
                     Spacer()
-                    NavigationLink(
-                        value: selectedPet
-                    ) {
+                    
+                    Button(action: {
+                        if let pet = selectedPet {
+                            appState.selectedPet = pet
+                            showLoginEnterInfoView = true
+                        }
+                    }) {
                         Text("선택 완료")
                             .font(.custom("Ownglyph meetme", size: 18))
                             .foregroundColor(.white)
@@ -84,19 +90,24 @@ struct LoginSelectPetView: View {
                             .padding()
                             .background(selectedPet != nil ? Color("login_true_btn_color") : Color("login_false_btn_color"))
                             .cornerRadius(10)
-                            .padding(.bottom, 20)
+                            .padding(.bottom, 10)
                     }
                     .disabled(selectedPet == nil)
                 }
                 .padding()
             }
-            .navigationDestination(for: PetType.self) { petType in
-                LoginEnterInfoView(profileImage: petType.imageName)
+            .navigationDestination(isPresented: $showLoginEnterInfoView) {
+                LoginEnterInfoView(profileImage: selectedPet?.imageName ?? "")
+                    .environmentObject(appState)
             }
         }
+        .environmentObject(appState)
     }
 }
 
-#Preview {
-    LoginSelectPetView()
+struct LoginSelectPetView_Previews: PreviewProvider {
+    static var previews: some View {
+        LoginSelectPetView()
+            .environmentObject(AppState())
+    }
 }

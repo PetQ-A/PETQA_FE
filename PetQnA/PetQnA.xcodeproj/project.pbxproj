@@ -19,6 +19,7 @@
 		902CF9CD2C4110BC005632EE /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902CF9CC2C4110BC005632EE /* ImagePicker.swift */; };
 		9042F7E12C4C13E900F94437 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9042F7E02C4C13E900F94437 /* TabBarView.swift */; };
 		9042F7E42C4C146400F94437 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9042F7E32C4C146400F94437 /* HomeView.swift */; };
+		9042F7E82C539F5F00F94437 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9042F7E72C539F5F00F94437 /* AppState.swift */; };
 		D83554F26C1505A2AA55480A /* Pods_PetQnA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D380B6BC9655DE6228021387 /* Pods_PetQnA.framework */; };
 		DA0376D12C41609F00B71ACC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0376D02C41609F00B71ACC /* AppDelegate.swift */; };
 		DA0376D72C44067F00B71ACC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0376D62C44067F00B71ACC /* SceneDelegate.swift */; };
@@ -46,6 +47,7 @@
 		902CF9CC2C4110BC005632EE /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		9042F7E02C4C13E900F94437 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		9042F7E32C4C146400F94437 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		9042F7E72C539F5F00F94437 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		B09AD25227E9FC60850A0BD8 /* Pods-PetQnA.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PetQnA.debug.xcconfig"; path = "Target Support Files/Pods-PetQnA/Pods-PetQnA.debug.xcconfig"; sourceTree = "<group>"; };
 		D380B6BC9655DE6228021387 /* Pods_PetQnA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PetQnA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA0376D02C41609F00B71ACC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 				902CF9C92C3E56FB005632EE /* Info.plist */,
 				902CF9AD2C3DA430005632EE /* PetQnAApp.swift */,
 				DA0376D02C41609F00B71ACC /* AppDelegate.swift */,
+				9042F7E72C539F5F00F94437 /* AppState.swift */,
 				DA0376D62C44067F00B71ACC /* SceneDelegate.swift */,
 				DA0376D82C44087100B71ACC /* KakaoAuthVM.swift */,
 				2A078AE22C4443B5001E355C /* Applelogin.swift */,
@@ -312,6 +315,7 @@
 				DA0376D92C44087100B71ACC /* KakaoAuthVM.swift in Sources */,
 				DA0377722C4D1E2400B71ACC /* AnswerBottomSheet.swift in Sources */,
 				902CF9C22C3E448B005632EE /* LoginEnterInfoView.swift in Sources */,
+				9042F7E82C539F5F00F94437 /* AppState.swift in Sources */,
 				902CF9B02C3DA430005632EE /* LoginView.swift in Sources */,
 				DA03776E2C4D1B0600B71ACC /* DashedLine.swift in Sources */,
 				902CF9CD2C4110BC005632EE /* ImagePicker.swift in Sources */,
