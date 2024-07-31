@@ -11,7 +11,7 @@ struct HomeView: View {
     
     @State var showingBottomSheet = false
     @State private var navigateToSnackSelection = false
-    //@EnvironmentObject var appState: AppState
+    @EnvironmentObject var appState: AppState
 
     
     // 임시 문답 리스트 배열
