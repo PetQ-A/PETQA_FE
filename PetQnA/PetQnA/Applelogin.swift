@@ -6,229 +6,90 @@
 ////
 //
 
-    @objc private func didTapAppleLoginButton() {
-        let request: ASAuthorizationAppleIDReqeust = ASAuthorizationAppleIDProvider().createRequest()
-        request.requestedScopes = [.fullName, .email]
-        
-        let controller = ASAuthorizationController(authorizationRequests: [request])
-        controller.delegate = self
-        controller.presentationContextProvider = self as? ASAuthorizationControllerPresentationContextProviding
-        controller.performRequests()
-        
-        let email:ASAuthorization.Scope
-        let fullName:ASAuthorization.Scope
-}
-    func authorizationController(
-        controller: ASAuthorizationController,
-        didCompleteWithAuthorization authorization: ASAuthorization)
-    func authorizationController(
-    controller: ASAuthorizationController,
-    didCompleteWithError error: Error)
+////
+////  Applelogin.swift
+////  PetQnA
+////
+////  Created by 김가영 on 7/15/24.
+////
+//
 
-    extension LoginViewController: ASAuthorizationControllerDelegate {
+import AuthenticationServices
 
-    // 성공 후 동작
-    func authorizationController(
-        controller: ASAuthorizationController,
-        didCompleteWithAuthorization authorization: ASAuthorization)
-    {
-        guard let credential = authorization.credential as? ASAuthorizationAppleIDCredential,
-              let code = credential.authorizationCode else {
-            return
-        }
-        
-        didSuccessdAppleLogin(code, credential.user) // 아래에 코드 있음
+extension SignInAppleVC: ASAuthorizationControllerPresentationContextProviding, ASAuthorizationControllerDelegate{
+    
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window!
     }
     
-    // 실패 후 동작
-    func authorizationController(
-        controller: ASAuthorizationController,
-        didCompleteWithError error: Error)
-    {
-        print("애플 로그인 실패")
-    }
-}
-    private func didSuccessdAppleLogin(_ code: Data, _ user: String) {
-    let autorizationCodeStr = String(data: code, encoding: .utf8)
-    let parameter = ["accessToken": autorizationCodeStr!]
-    
-    API.appleOAuthLogin(parameter) { [weak self] info in
-        DispatchQueue.main.async {
-            print("appleOAutoLogin 응답: \(info)")
-            LoginManager.shared.saveAppleLoginInfo(info)
-            keyChain.create(userID: user)
+    // Apple ID 연동 성공 시
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        switch authorization.credential {
+            // Apple ID
+        case let appleIDCredential as ASAuthorizationAppleIDCredential:
             
-            self?.goToInitialViewController()
-        }
-    }
-}
-class keyChain {
-    
-    class func create(userID: String) {
-        let query: NSDictionary = [
-            kSecClass: kSecClassGenericPassword,
-            kSecAttrAccount: "userID",
-            kSecValueData: userID.data(using: .utf8, allowLossyConversion: false) as Any
-        ]
-        
-        SecItemDelete(query)
-        
-        let status = SecItemAdd(query, nil)
-        assert(status == noErr, "아이디 저장 실패")
-    }
-    
-    class func read() -> String? {
-        let query: NSDictionary = [
-            kSecClass: kSecClassGenericPassword,
-            kSecAttrAccount: "userID",
-            kSecReturnData: kCFBooleanTrue as Any,
-            kSecMatchLimit: kSecMatchLimitOne
-        ]
-        
-        var dataTypeRef: AnyObject?
-        let status = SecItemCopyMatching(query, &dataTypeRef)
-
-        if status == errSecSuccess {
-            let retrievedData = dataTypeRef as! Data
-            let value = String(data: retrievedData, encoding: String.Encoding.utf8)
-            return value
-        } else {
-            return ""
-        }
-    }
-    
-    class func delete() {
-        let query: NSDictionary = [
-            kSecClass: kSecClassGenericPassword,
-            kSecAttrAccount: "userID"
-        ]
-        
-        let status = SecItemDelete(query)
-        assert(status == noErr, "아이디 삭제 실패")
-    }
-}
-func appleLogin() {
-    let appleIDProvider = ASAuthorizationAppleIDProvider()
-    appleIDProvider.getCredentialState(forUserID: keyChain.read()!) { credentialState, error in
-        switch credentialState {
-        case .authorized:
-            // 인증 성공 상태
-            UserDefaults.standard.removeObject(forKey: "GoogleLoginInfo")
-            print("애플 로그인 인증 성공")
-            break
-        case .revoked:
-            // 인증 만료 상태 (사용자가 백그라운드에서 ID중지했을 경우)
-            print("애플 로그인 인증 만료")
-            // 만약 애플 로그인이 로그인 상태였으면 로그아웃 상태로 해야 함
+            // 계정 정보 가져오기
+            let userIdentifier = appleIDCredential.user
+            let fullName = appleIDCredential.fullName
+            let email = appleIDCredential.email
+            let idToken = appleIDCredential.identityToken!
+            let tokeStr = String(data: idToken, encoding: .utf8)
+         
+            print("User ID : \(userIdentifier)")
+            print("User Email : \(email ?? "")")
+            print("User Name : \((fullName?.givenName ?? "") + (fullName?.familyName ?? ""))")
+            print("token : \(String(describing: tokeStr))")
             
-            if keyChain.read() != "" {
-                LoginManager.shared.logout { }
-            }
-    
-            break
-        case .notFound:
-            // Credential을 찾을 수 없는 상태 (로그아웃 상태)
-            print("애플 Credential을 찾을 수 없음")
-            break
         default:
             break
         }
     }
-}
-    func sceneDidBecomeActive(_ scene: UIScene) {
-     let appleIDProvider = ASAuthorizationAppleIDProvider()
-     appleIDProvider.getCredentialState(forUserID: keyChain.read()!) { credentialState, error in
-         switch credentialState {
-         case .authorized:
-             // 인증 성공 상태
-             print("sceneDidBecomeActive - 애플 로그인 인증 성공")
-             break
-         case .revoked:
-             // 인증 만료 상태 (사용자가 백그라운드에서 ID중지했을 경우)
-             print("sceneDidBecomeActive - 애플 로그인 인증 만료")
-             // 만약 애플 로그인이 로그인 상태였으면 로그아웃 상태로 해야 함
-             
-             if keyChain.read() != "" {
-                 LoginManager.shared.logout {
-                     DispatchQueue.main.async {
-                         let homeViewController = UINavigationController(rootViewController: HomeViewController())
-                         
-                         self.window?.rootViewController = homeViewController
-                         self.window?.rootViewController?.dismiss(animated: false)
-                     }
-                 }
-             }
-             
-             break
-         case .notFound:
-             // Credential을 찾을 수 없는 상태 (로그아웃 상태)
-             print("sceneDidBecomeActive - 애플 Credential을 찾을 수 없음")
-             break
-         default:
-             break
-         }
-     }
- }
-// LoginManager
-func checkLogin(completion: @escaping() -> Void) {
-
-        loadLoginInfo()
-        
-        // 애플 로그인 한 경우
-        if appleLogin == true {
-            
-            let parameter: [String: Any] = [
-                "id": appleLoginInfo!.userID,
-                "token": appleLoginInfo!.rememberMeToken
-            ]
-            
-            API.rememberedLogin(parameter) { info in
-                guard let info = info else {
-                    self.isLoggedIn = false
-                    completion()
-                    return
-                }
-                
-                self.saveAppleLoginInfo(info)
-                self.isLoggedIn = true
-                self.firstLogin = true
-                completion()
-            }
-        } else {
-            self.isLoggedIn = false
-            completion()
-        }
-    }
-// LoginManager
-
-func loadLoginInfo() {
-    if keyChain.read() != "" {
-            if let data = UserDefaults.standard.data(forKey: "AppleLoginInfo") {
-                
-                appleLoginInfo = try? PropertyListDecoder().decode(
-                    LoginInfo.self,
-                    from: data)
-                
-                appleLogin = true
-                print("자동 로그인 정보 있음 - 애플")
-            }
-        } else {
-            print("자동 로그인 정보 없음")
-        }
-    }
-func logout(completion: @escaping () -> Void) {
-
-    guard let cookies = HTTPCookieStorage.shared.cookies else { return }
-            
-    for cookie in cookies {
-    HTTPCookieStorage.shared.deleteCookie(cookie)
-    }
     
-    keyChain.delete()
-    self.appleLoginInfo = nil
-    UserDefaults.standard.removeObject(forKey: "AppleLoginInfo")
-    self.appleLogin = false
-       completion()
+    // Apple ID 연동 실패 시
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        // Handle error.
     }
+}
+
+class SignInAppleVC: UIViewController {
+//애플 소셜 로그인
+    @IBAction func appleLogin(_ sender: Any) {
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
+    }
+}
+
+//applelogin 상태 확인
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        //forUserID = userIdentifier
+        appleIDProvider.getCredentialState(forUserID: "001281.9301aaa1f617423c9c7a64b671b6eb84.0758") { (credentialState, error) in
+            switch credentialState {
+            case .authorized:
+                // The Apple ID credential is valid.
+                print("해당 ID는 연동되어있습니다.")
+            case .revoked:
+                // The Apple ID credential is either revoked or was not found, so show the sign-in UI.
+                print("해당 ID는 연동되어있지않습니다.")
+            case .notFound:
+                // The Apple ID credential is either was not found, so show the sign-in UI.
+                print("해당 ID를 찾을 수 없습니다.")
+            default:
+                break
+            }
+        }
+        //앱 실행 중 강제로 연결 취소 시
+        NotificationCenter.default.addObserver(forName: ASAuthorizationAppleIDProvider.credentialRevokedNotification, object: nil, queue: nil) { (Notification) in
+            print("Revoked Notification")
+            // 로그인 페이지로 이동
+        }
+    return true
+}
 
 
