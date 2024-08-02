@@ -6,13 +6,6 @@
 ////
 //
 
-////
-////  Applelogin.swift
-////  PetQnA
-////
-////  Created by 김가영 on 7/15/24.
-////
-//
 
 import AuthenticationServices
 
@@ -91,5 +84,4 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
         }
     return true
 }
-
 
