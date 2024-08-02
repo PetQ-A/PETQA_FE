@@ -9,6 +9,8 @@ import SwiftUI
 
 struct HomeView: View {
     
+    @State var showingBottomSheet = false
+    @State private var navigateToSnackSelection = false
     @EnvironmentObject var appState: AppState
 
     
@@ -25,7 +27,6 @@ struct HomeView: View {
     var body: some View {
         VStack {
             HStack {
-                
                 VStack {
                     Button(action: {
                         
@@ -68,6 +69,7 @@ struct HomeView: View {
                 
                 Button(action: {
                     // 간식 고르기 창으로 이동
+                    navigateToSnackSelection = true
                 }) {
                     VStack {
                         Image("main_bone")
@@ -77,6 +79,9 @@ struct HomeView: View {
                             .font(.system(size: 10, weight: .bold))
                             .foregroundColor(.black)
                     }
+                }
+                .fullScreenCover(isPresented: $navigateToSnackSelection) {
+                    SnackSelectionView()
                 }
                 
                 Button(action: {
