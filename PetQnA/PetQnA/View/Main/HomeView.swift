@@ -11,6 +11,7 @@ struct HomeView: View {
     
     @State var showingBottomSheet = false
     @State private var navigateToSnackSelection = false
+    @State private var navigateToQnAList = false
     @EnvironmentObject var appState: AppState
 
     
@@ -86,6 +87,7 @@ struct HomeView: View {
                 
                 Button(action: {
                     // 문답 리스트 창으로 이동
+                    navigateToQnAList = true
                 }) {
                     VStack {
                         Image("main_doc")
@@ -96,6 +98,9 @@ struct HomeView: View {
                             .font(.system(size: 10, weight: .bold))
                             .foregroundColor(.black)
                     }
+                }
+                .fullScreenCover(isPresented: $navigateToQnAList) {
+                    QnAListView()
                 }
                 .padding(.trailing, 16)
             }

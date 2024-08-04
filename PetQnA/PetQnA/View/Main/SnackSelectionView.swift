@@ -11,6 +11,7 @@ struct SnackSelectionView: View {
     @State private var selectedSnack: SnackItem? = nil
     @State private var showingConfirmationSheet = false
     @State private var navigateToDetailView = false
+    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         NavigationView {
@@ -80,7 +81,7 @@ struct SnackSelectionView: View {
             .navigationBarTitle("간식 고르기", displayMode: .inline)
             .navigationBarItems(leading: Button(action: {
                 // 뒤로가기 액션
-                navigateToDetailView = false
+                presentationMode.wrappedValue.dismiss()
             }) {
                 Image(systemName: "chevron.left")
                     .foregroundColor(.black) // 아이콘 색상 설정

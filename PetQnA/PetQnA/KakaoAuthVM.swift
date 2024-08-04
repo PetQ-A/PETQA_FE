@@ -11,11 +11,18 @@ import KakaoSDKAuth
 import KakaoSDKCommon
 import KakaoSDKUser
 
+struct APIResponse: Codable {
+    let isSuccess: Bool
+    let code: String
+    let message: String
+    let data: String
+}
+
 class KakaoAuthVM : ObservableObject {
-    
     @Published var user: User? = nil
     @Published var isLoggedIn: Bool = false
     @Published var accessTokenInfo: AccessTokenInfo? = nil
+    
     
     func handleKakaoLogin() {
         // 카카오톡 실행 가능 여부 확인 - 설치 되어 있을 때
@@ -28,6 +35,9 @@ class KakaoAuthVM : ObservableObject {
                     print("loginWithKakaoTalk() success.")
                     self.isLoggedIn = true
                     self.getUserInfo()
+                    if let user = self.user {
+                        self.sendUserInfoToServer(user: user)
+                    }
                 }
             }
         } else { // 설치 안되어 있을 때
@@ -39,6 +49,9 @@ class KakaoAuthVM : ObservableObject {
                     print("loginWithKakaoAccount() success.")
                     self.isLoggedIn = true
                     self.getUserInfo()
+                    if let user = self.user {
+                        self.sendUserInfoToServer(user: user)
+                    }
                 }
             }
         }
@@ -80,6 +93,9 @@ class KakaoAuthVM : ObservableObject {
             } else {
                 print("User Info: \(String(describing: user))")
                 self.user = user
+                if let user = user {
+                    self.sendUserInfoToServer(user: user)
+                }
             }
         }
     }
@@ -93,4 +109,42 @@ class KakaoAuthVM : ObservableObject {
             }
         }
     }
+    
+    func sendUserInfoToServer(user: User) {
+        guard let id = user.id else { return }
+        let username = user.kakaoAccount?.profile?.nickname ?? "Unknown"
+        
+        var request = URLRequest(url: URL(string: "https://your.api.endpoint/user")!)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let body: [String: Any] = ["id": String(id), "username": username]
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
+        } catch {
+            print("Error: \(error.localizedDescription)")
+            return
+        }
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("API error: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let data = data else {
+                print("No data received from server")
+                return
+            }
+            
+            do {
+                let jsonResponse = try JSONDecoder().decode(APIResponse.self, from: data)
+                print("API Response: \(jsonResponse)")
+            } catch {
+                print("Decoding error: \(error.localizedDescription)")
+            }
+        }.resume()
+    }
 }
+
+

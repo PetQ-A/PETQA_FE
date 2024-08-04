@@ -28,6 +28,7 @@
 		DA0377722C4D1E2400B71ACC /* AnswerBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0377712C4D1E2400B71ACC /* AnswerBottomSheet.swift */; };
 		DA0377C82C53D40100B71ACC /* SnackSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0377C72C53D40100B71ACC /* SnackSelectionView.swift */; };
 		DA0377CA2C53D41900B71ACC /* SnackDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0377C92C53D41900B71ACC /* SnackDetailView.swift */; };
+		DA51203D2C5FAFCF009B1D25 /* QnAList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA51203C2C5FAFCE009B1D25 /* QnAList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +58,7 @@
 		DA0377712C4D1E2400B71ACC /* AnswerBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerBottomSheet.swift; sourceTree = "<group>"; };
 		DA0377C72C53D40100B71ACC /* SnackSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackSelectionView.swift; sourceTree = "<group>"; };
 		DA0377C92C53D41900B71ACC /* SnackDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackDetailView.swift; sourceTree = "<group>"; };
+		DA51203C2C5FAFCE009B1D25 /* QnAList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QnAList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +165,7 @@
 				DA0377712C4D1E2400B71ACC /* AnswerBottomSheet.swift */,
 				DA0377C72C53D40100B71ACC /* SnackSelectionView.swift */,
 				DA0377C92C53D41900B71ACC /* SnackDetailView.swift */,
+				DA51203C2C5FAFCE009B1D25 /* QnAList.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -312,6 +315,7 @@
 				9042F7E12C4C13E900F94437 /* TabBarView.swift in Sources */,
 				DA0377C82C53D40100B71ACC /* SnackSelectionView.swift in Sources */,
 				902CF9BF2C3E3C33005632EE /* LoginSelectPetView.swift in Sources */,
+				DA51203D2C5FAFCF009B1D25 /* QnAList.swift in Sources */,
 				DA0376D92C44087100B71ACC /* KakaoAuthVM.swift in Sources */,
 				DA0377722C4D1E2400B71ACC /* AnswerBottomSheet.swift in Sources */,
 				902CF9C22C3E448B005632EE /* LoginEnterInfoView.swift in Sources */,
