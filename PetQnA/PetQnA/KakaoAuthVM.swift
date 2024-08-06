@@ -114,7 +114,7 @@ class KakaoAuthVM : ObservableObject {
         guard let id = user.id else { return }
         let username = user.kakaoAccount?.profile?.nickname ?? "Unknown"
         
-        var request = URLRequest(url: URL(string: "https://your.api.endpoint/user")!)
+        var request = URLRequest(url: URL(string: "https://dev.petqa.store/login")!)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
