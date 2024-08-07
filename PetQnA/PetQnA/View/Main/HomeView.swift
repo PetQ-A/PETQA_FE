@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     
-    @State var showingBottomSheet = false
+    @State var showingAnswerBottomSheet = false
     @State private var navigateToSnackSelection = false
     @State private var navigateToQnAList = false
     @EnvironmentObject var appState: AppState
@@ -113,6 +113,7 @@ struct HomeView: View {
             VStack {
                 Button(action: {
                     // 오늘 문답하러 가기
+                    showingAnswerBottomSheet = true
                 }) {
                     Image("main_bubble")
                         .resizable()
@@ -128,6 +129,10 @@ struct HomeView: View {
                         )
                 }
                 .padding(.bottom, 45)
+                .sheet(isPresented: $showingAnswerBottomSheet){
+                    AnswerBottomSheet(showingBottomSheet: $showingAnswerBottomSheet)
+                        .presentationDetents([.height(650)])
+                }
                 HStack {
                     Image("main_fullfeedbowl")
                         .resizable()

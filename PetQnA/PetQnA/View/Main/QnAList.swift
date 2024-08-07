@@ -50,10 +50,6 @@ struct QnAListView: View {
                 ZStack {
                     RoundedRectangle(cornerRadius: 15)
                         .fill(Color.white)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 15)
-                                .stroke(Color.gray, lineWidth: 2)
-                        )
                         .padding(.horizontal, 15)
                     
                     ScrollView {
@@ -128,7 +124,7 @@ struct QnADetail: View {
                 
                 Text(selectedQuestion.question)
                     .font(.system(size: 16, weight: .bold))
-                    .padding(.leading, 20)
+                    .padding(.leading, 10)
                     .padding(.bottom, 20)
                 
                 DashedLine()
@@ -138,20 +134,25 @@ struct QnADetail: View {
                 
                 HStack {
                     Spacer()
-                    HStack(spacing: 5) {
-                        Text("답변 수정하기")
-                        
-                        Image(systemName: "pencil")
+                    Button(action: {
+                        // 버튼 액션
+                    }) {
+                        HStack(spacing: 5) {
+                            Text("답변 수정하기")
+                            
+                            Image(systemName: "pencil")
+                        }
+                        .font(.system(size: 14))
+                        .foregroundColor(.blue)
+                        .padding(.leading, 20)
                     }
-                    .font(.system(size: 14))
-                    .foregroundColor(.blue)
-                    .padding(.leading, 20)
                 }
                 
                 Text("답변 내용을 여기에 입력하세요.")
                     .font(.system(size: 14))
-                    .padding(.horizontal, 20)
+                    .padding(.horizontal, 15)
                     .padding(.top, 10)
+                    
             }
             .padding()
             Spacer()
@@ -175,7 +176,6 @@ struct QuestionRow: View {
                 
                 Text(question.question)
                     .font(.system(size: 14))
-                    .padding(.leading, 5)
                     .lineLimit(1)
                 
                 Spacer()

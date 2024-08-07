@@ -25,7 +25,7 @@ struct SnackDetailView: View {
                             .frame(width: 280, height: 230)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.orange, lineWidth: 2) // 주황색 테두리 추가
+                                    .stroke(Color("login_true_btn_color"), lineWidth: 2) // 주황색 테두리 추가
                             )
                         
                         VStack(spacing: 10) {
@@ -83,7 +83,7 @@ struct SnackDetailView: View {
                         .frame(maxWidth: .infinity)
                         .padding()
                         .foregroundColor(.white)
-                        .background(Color.orange)
+                        .background(Color("login_true_btn_color"))
                         .cornerRadius(10)
                         .padding(.horizontal)
                         .font(.custom("Ownglyph meetme", size: 18))
